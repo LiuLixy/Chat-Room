@@ -10,9 +10,9 @@
 
 如图：
 
-![1532179688568](C:\Users\LiuWang\AppData\Local\Temp\1532179701421.png)
+![注册1](https://github.com/LiuLixy/image/blob/master/1532179688568.png)
 
-![1532179706532](C:\Users\LiuWang\AppData\Local\Temp\1532179706532.png)
+![注册2](https://github.com/LiuLixy/image/blob/master/1532179701421.png)
 
 ##### 群聊
 
@@ -22,10 +22,10 @@
 
 当用户在控制台输入 P:userName-message(此处userName为用户想要私聊消息的用户，message为消息内容)时，就对指定的用户进行私聊，由于此聊天室没有其他用户，此方法会报错。
 
-![1532180027819](C:\Users\LiuWang\AppData\Local\Temp\1532180027819.png)
+![私聊](https://github.com/LiuLixy/image/blob/master/1532180027819.png)
 
 ##### 用户退出
 
 当用户在控制台输入 byebye 时，就退出此聊天室
 
-![1532180348859](C:\Users\LiuWang\AppData\Local\Temp\1532180348859.png)![1532180362513](C:\Users\LiuWang\AppData\Local\Temp\1532180362513.png)
+![用户退出1](https://github.com/LiuLixy/image/blob/master/1532180348859.png)![用户退出2](https://github.com/LiuLixy/image/blob/master/1532180362513.png)
