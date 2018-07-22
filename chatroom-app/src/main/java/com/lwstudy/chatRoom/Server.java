@@ -74,8 +74,6 @@ public class Server {
     // 构造方法
     public Server() {
         frame = new JFrame("服务器");
-        // 更改JFrame的图标
-        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("chat.jpg"));
         contentArea = new JTextArea();
         contentArea.setEditable(false);
         contentArea.setForeground(Color.blue);
@@ -269,7 +267,7 @@ public class Server {
     // 群发服务器消息
     public void sendServerMessage(String message) {
         for (int i = clients.size() - 1; i >= 0; i--) {
-            clients.get(i).getWriter().println("服务器：" + message + "(多人发送)");
+            clients.get(i).getWriter().println("服务器：" + message);
             clients.get(i).getWriter().flush();
         }
     }
@@ -277,7 +275,8 @@ public class Server {
     // 服务器线程
     class ServerThread extends Thread {
         private ServerSocket serverSocket;
-        private int max;// 人数上限
+        // 人数上限
+        private int max;
 
         // 服务器线程的构造方法
         public ServerThread(ServerSocket serverSocket, int max) {
@@ -292,21 +291,21 @@ public class Server {
                     Socket socket = serverSocket.accept();
                     // 如果已达人数上限
                     if (clients.size() == max) {
-                        BufferedReader r = new BufferedReader(
+                        BufferedReader bufferedReader = new BufferedReader(
                                 new InputStreamReader(socket.getInputStream()));
-                        PrintWriter w = new PrintWriter(socket
+                        PrintWriter printWriter = new PrintWriter(socket
                                 .getOutputStream());
                         // 接收客户端的基本用户信息
-                        String inf = r.readLine();
+                        String inf = bufferedReader.readLine();
                         StringTokenizer st = new StringTokenizer(inf, "@");
                         User user = new User(st.nextToken(), st.nextToken());
                         // 反馈连接成功信息
-                        w.println("MAX@服务器：对不起，" + user.getName()
+                        printWriter.println("MAX@服务器：对不起，" + user.getName()
                                 + user.getIp() + "，服务器在线人数已达上限，请稍后尝试连接！");
-                        w.flush();
+                        printWriter.flush();
                         // 释放资源
-                        r.close();
-                        w.close();
+                        bufferedReader.close();
+                        printWriter.close();
                         socket.close();
                         continue;
                     }
@@ -426,7 +425,7 @@ public class Server {
             }
         }
 
-        // 转发消息
+        // 群发消息
         public void dispatcherMessage(String message) {
             StringTokenizer stringTokenizer = new StringTokenizer(message, "@");
             String source = stringTokenizer.nextToken();
@@ -437,7 +436,7 @@ public class Server {
             // 群发
             if (owner.equals("ALL")) {
                 for (int i = clients.size() - 1; i >= 0; i--) {
-                    clients.get(i).getWriter().println(message + "(多人发送)");
+                    clients.get(i).getWriter().println(message+"(多人发送)");
                     clients.get(i).getWriter().flush();
                 }
             }
