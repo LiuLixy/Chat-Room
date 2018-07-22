@@ -83,6 +83,7 @@ public class Client {
 
     // 构造方法
     public Client() {
+
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setForeground(Color.blue);
@@ -122,8 +123,6 @@ public class Client {
         centerSplit.setDividerLocation(100);
 
         frame = new JFrame("客户机");
-        // 更改JFrame的图标：
-        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("chat.jpg"));
         frame.setLayout(new BorderLayout());
         frame.add(northPanel, "North");
         frame.add(centerSplit, "Center");
@@ -225,6 +224,7 @@ public class Client {
      * @param name
      */
     public boolean connectServer(int port, String hostIp, String name) {
+
         // 连接服务器
         try {
             // 根据端口号和服务器ip建立连接
