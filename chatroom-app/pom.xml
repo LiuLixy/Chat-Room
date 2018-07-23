@@ -6,11 +6,11 @@
 
     <groupId>com.lwstudy</groupId>
     <artifactId>chatroom-app</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>ChatRoom-App</name>
-    <description>这是一个Java聊天室</description>
+    <description>这是一个带界面的Java聊天室</description>
 
     <developers>
         <developer>
@@ -53,7 +53,7 @@
                         </manifest>
                         <manifestEntries>
                             <Implementation-Title>${project.name}</Implementation-Title>
-                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Implementation-Version>${project.version}</Implementation-Versio>
                             <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
                         </manifestEntries>
                     </archive>
