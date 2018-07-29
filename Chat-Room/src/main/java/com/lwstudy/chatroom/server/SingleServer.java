@@ -16,13 +16,13 @@ import java.util.regex.Pattern;
 /**
  * 服务器处理用户连接后的输入输出处理
  */
-class ExcuteClientServer implements Runnable {
+class ExecuteClientServer implements Runnable {
 
     private Map<String, Socket> clientMap = new HashMap<String, Socket>();
 
     private Socket client;
 
-    public ExcuteClientServer(Socket client, Map<String, Socket> clientMap) {
+    public ExecuteClientServer(Socket client, Map<String, Socket> clientMap) {
         super();
         this.client = client;
         this.clientMap = clientMap;
@@ -86,7 +86,12 @@ class ExcuteClientServer implements Runnable {
         }
     }
 
-    //获取key值（即由端口号找到用户名）
+    /**
+     * 获取key值（即由端口号找到用户名）
+     *
+     * @param socket
+     * @return
+     */
     public String getUserName(Socket socket) {
         String userName = null;
         for(String getKey : clientMap.keySet()) {
@@ -143,7 +148,7 @@ public class SingleServer {
     public static void main(String[] args) throws Exception {
 
         ServerSocket serverSocket = new ServerSocket(6666);
-        //存取用户信息（用户名和Socket）
+        // 存取用户信息（用户名和Socket）
         Map<String, Socket> map = new HashMap<String, Socket>();
         // 创建一个固定大小的线程池，大小为20
         ExecutorService executorService = Executors.newFixedThreadPool(20);
@@ -152,13 +157,12 @@ public class SingleServer {
             for(int i = 0;i < 20;i ++) {
                 Socket socket = serverSocket.accept();
                 System.out.println("有新的用户连接："+socket.getInetAddress()+"\t"+socket.getPort());
-                executorService.execute(new ExcuteClientServer(socket, map));
+                executorService.execute(new ExecuteClientServer(socket, map));
             }
             executorService.shutdown();
             serverSocket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
