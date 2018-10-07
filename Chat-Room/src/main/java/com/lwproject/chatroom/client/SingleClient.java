@@ -1,10 +1,18 @@
-package com.lwstudy.chatroom.client;
+package com.lwproject.chatroom.client;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
-import java.io.IOException;
 
+/**
+ * @author: LiuWang
+ * @data: 2018/10/3 11:19
+ */
+
+/**
+ * 客户端发送消息给服务器
+ */
 class OutToServer implements Runnable {
     private Socket client;
 
@@ -17,17 +25,16 @@ class OutToServer implements Runnable {
     public void run() {
         PrintStream printStream;
         try {
-            // 获取客户端输出流，向服务器发生信息
+            // 获取客户端输出流，向服务器发送消息
             printStream = new PrintStream(client.getOutputStream(), true);
             // 从键盘读取信息，发送给服务器
             Scanner scanner = new Scanner(System.in);
-            scanner.useDelimiter("\n");
             while (true) {
                 System.out.print("请输入内容: ");
                 if (scanner.hasNext()) {
                     String str = scanner.nextLine();
                     printStream.println(str);
-                    if (str.equals("byebye")) {
+                    if ("byebye".equals(str)) {
                         System.out.println("客户端退出...");
                         printStream.close();
                         scanner.close();
@@ -36,16 +43,17 @@ class OutToServer implements Runnable {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
 
 /**
- * 读取服务器线程
+ * 读取服务器发来的消息
  */
 class ReadFromServer implements Runnable {
+
     private Socket client;
 
     public ReadFromServer(Socket client) {
@@ -55,11 +63,12 @@ class ReadFromServer implements Runnable {
 
     @Override
     public void run() {
+        Scanner scanner;
         try {
-            Scanner scanner = new Scanner(client.getInputStream());
+            scanner = new Scanner(client.getInputStream());
             scanner.useDelimiter("\n");
             while (scanner.hasNext()) {
-                System.out.println("服务器发来的信息为: " + scanner.nextLine());
+                System.out.println(scanner.nextLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,16 +78,15 @@ class ReadFromServer implements Runnable {
 
 public class SingleClient {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
-            // 创建连接服务器的客户端套接字
-            Socket client = new Socket("127.0.0.1", 6666);
-            System.out.println("等待连接服务器...");
+            Socket client = new Socket("127.0.0.1", 9999);
+            System.out.println("等待连接到服务器...");
             Thread readThread = new Thread(new ReadFromServer(client));
             Thread writeThread = new Thread(new OutToServer(client));
             readThread.start();
             writeThread.start();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
